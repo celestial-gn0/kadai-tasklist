@@ -51,7 +51,7 @@ class TasksController extends Controller
 
         // タスク詳細ビューでそれを表示
         return view('$tasks.show', [
-            '$task' => $$task,
+            '$task' => $task,
         ]);
     }
 
