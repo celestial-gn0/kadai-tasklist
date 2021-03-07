@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasklist extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+   public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -27,6 +27,6 @@ class CreateTasklist extends Migration
      */
     public function down()
     {
-       Schema::dropIfExists('create_tasks_table');
+        Schema::dropIfExists('tasks');
     }
 }

@@ -18,6 +18,7 @@ class AddStatusToTasksTable extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *
