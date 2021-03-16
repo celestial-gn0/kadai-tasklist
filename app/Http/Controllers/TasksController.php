@@ -11,13 +11,19 @@ class TasksController extends Controller
     // getでtasks/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
-         // タスク一覧を取得
-        $tasks = Task::orderBy('id', 'desc')->paginate(25);
-
+        $data = [];
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+            // タスク一覧を取得
+            $tasks = Task::orderBy('id', 'desc')->paginate(25);
+            $data = [
+                'user' => $user,
+                'tasks' => $tasks,
+            ];
+        }
         // タスク一覧ビューでそれを表示
-        return view('tasks.index', [
-            'tasks' => $tasks,
-        ]);
+        return view('welcome', $data);
     }
 
     // getでtasks/createにアクセスされた場合の「新規登録画面表示処理」
