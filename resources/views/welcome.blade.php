@@ -10,6 +10,10 @@
                     </div>
                 </div>
             </aside>
+            <div class="col-sm-8">
+                {{-- 投稿一覧 --}}
+                @include('tasks.index')
+            </div>
         </div>
     @else
         <div class="center jumbotron">
