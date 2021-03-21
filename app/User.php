@@ -40,7 +40,7 @@ class User extends Authenticatable
     /**
      * このユーザが所有する投稿。（tasklistモデルとの関係を定義）
      */
-    public function tasklist()
+    public function tasks()
     {
         return $this->hasMany(Task::class);
     }

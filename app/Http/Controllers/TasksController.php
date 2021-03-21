@@ -47,13 +47,10 @@ class TasksController extends Controller
         ]);
         
          // タスクを作成
-        $task = new Task;
-        $task->status = $request->status;
-        $task->content = $request->content;
         $request->user()->tasks()->create([
+            'status' => $request->status,
             'content' => $request->content,
         ]);
-        $task->save();
 
         // トップページへリダイレクトさせる
         return redirect('/');
@@ -64,6 +61,13 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+        }else{
+            // トップページへリダイレクトさせる
+            return redirect('/');
+        }
 
         // タスク詳細ビューでそれを表示
         return view('tasks.show', [
@@ -101,13 +105,10 @@ class TasksController extends Controller
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
          // タスクを更新
-        $task->status = $request->status;
-        // タスクを更新
-        $task->content = $request->content;
-        $request->user()->tasks()->create([
+         $request->user()->tasks()->create([
+            'status' => $request->status,
             'content' => $request->content,
         ]);
-        $task->save();
 
         // トップページへリダイレクトさせる
         return redirect('/');
