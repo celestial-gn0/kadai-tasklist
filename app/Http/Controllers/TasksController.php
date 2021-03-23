@@ -16,7 +16,7 @@ class TasksController extends Controller
             // 認証済みユーザを取得
             $user = \Auth::user();
             // タスク一覧を取得
-            $tasks = Task::orderBy('id', 'desc')->paginate(25);
+            $tasks = $user->tasks()->orderBy('id','desc')->paginate(25);
             $data = [
                 'user' => $user,
                 'tasks' => $tasks,
@@ -78,7 +78,7 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
-        if (\Auth::check()) { // 認証済みの場合
+        if (\Auth::id() === $task->user_id) {
             // 認証済みユーザを取得
             $user = \Auth::user();
         }else{
