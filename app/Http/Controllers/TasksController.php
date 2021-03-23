@@ -103,11 +103,10 @@ class TasksController extends Controller
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
         if (\Auth::id() === $task->user_id) {
-         // タスクを更新
-         $request->user()->tasks()->create([
-            'status' => $request->status,
-            'content' => $request->content,
-        ]);
+             // タスクを更新
+            $task->status = $request->status;
+            $task->content = $request->content;
+            $task->save();
         }else{
             // トップページへリダイレクトさせる
             return redirect('/');
@@ -124,7 +123,7 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
         // メッセージを削除
         if (\Auth::id() === $task->user_id) {
-        $task->delete();
+             $task->delete();
         }else{
             // トップページへリダイレクトさせる
             return redirect('/');
