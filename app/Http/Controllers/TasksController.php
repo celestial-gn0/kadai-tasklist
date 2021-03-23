@@ -61,18 +61,16 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
-        if (\Auth::check()) { // 認証済みの場合
-            // 認証済みユーザを取得
-            $user = \Auth::user();
+        if (\Auth::id() === $task->user_id) {
+            // タスク詳細ビューでそれを表示
+             return view('tasks.show', [
+                'task' => $task,
+        ]);
         }else{
             // トップページへリダイレクトさせる
             return redirect('/');
         }
-
-        // タスク詳細ビューでそれを表示
-        return view('tasks.show', [
-            'task' => $task,
-        ]);
+        
     }
 
     // getでtasks/（任意のid）/editにアクセスされた場合の「更新画面表示処理」
@@ -104,11 +102,16 @@ class TasksController extends Controller
         
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
+        if (\Auth::id() === $task->user_id) {
          // タスクを更新
          $request->user()->tasks()->create([
             'status' => $request->status,
             'content' => $request->content,
         ]);
+        }else{
+            // トップページへリダイレクトさせる
+            return redirect('/');
+        }
 
         // トップページへリダイレクトさせる
         return redirect('/');
